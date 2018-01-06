@@ -10,60 +10,60 @@ function [ H, W ] = freq_response( b, a, N, fs )
 % Inputs:
 %
 % b     - feedforward coefficients
-% a     - foodback coefficients
-% N     - number of desired data points for the frequency reponse
+% a     - feedback coefficients
+% N     - # of data points for output vectors - half fft size
+% fs    - the sampling frequency
 %
 % Outputs:
 %
 % H     - the frequency response, complex valued
-% W     - the frequency vector
+% W     - the angular frequency vector; if fs is specified, W is true
+%         frequency
 
 if nargin < 2
     a = 1;          % defaults a single feedback coefficient
-    N = 512;        % default size of FFT
+    N = 512;        % default # of data point for output
     fs = 2;         % allows unaffected normalized frequency vector
     xlabel_string = 'Normalized Frequency';
-    
 elseif nargin < 3
-    N = 512;        % defualt size of FFT
+    N = 512;        % defualt # of data point for output
     fs = 2;         % allows unaffected normalized frequency vector
     xlabel_string = 'Normalized Frequency';
-    
 elseif nargin < 4
     fs = 2;         % allows unaffected normalized frequency vector  
     xlabel_string = 'Normalized Frequency';
-    
 else
-    xlabel_string = 'True Frequency, Hz';
-    
+    xlabel_string = 'True Frequency, Hz';  
 end
     
-b = [b, zeros(1, N-length(b))];    
-H_full = fft(b);
-
+fft_size = 2*(N-1);
+   
+H_full = fft(b, fft_size);            % freq response for FIR case
 if length(a) > 1
-    a = [a, zeros(1, N-length(a))];
-    H_full = H_full ./ fft(a);
+    H_full = H_full ./ fft(a, fft_size); % for IIR case
+end
+H = H_full(1:fft_size/2+1);            % frequency response at freq. [0, pi]
+
+W = linspace(0, 2*pi*((N-1)/N)*(fs/2), N);  % angular frequency vector
+if nargin == 4
+    W = linspace(0, ((N-1)/N)*(fs/2), N);   % True frequency (Hz) if fs specified
 end
 
-H = H_full(1:N/2+1);            % frequency response at freq. [0, pi]
-
+% Plotting
 magH = abs(H);
-magH = 20*log10(magH/max(magH));    % Magnitude in dB
+magH = 20*log10(magH/max(magH));       % Magnitude in dB
 phase = angle(H);
-phase = unwrap(phase);              % unwrapped phase in radians
-
-W = (0:N/2).*(fs/2)./(N/2);         % frequency vector
-
+phase = unwrap(phase)/pi;              % unwrapped phase in pi*radians
+      
 subplot(2,1,1)
 plot(W, magH)
 ylabel('Magnitude Response, dB')
 xlabel(xlabel_string)
-axis([W(1) W(end) -150 10])
+axis([W(1) W(end) -120 10])
 subplot(2,1,2)
 plot(W, phase)
-ylabel('Phase in Radians')
+ylabel('Phase in Pi Radians')
 xlabel(xlabel_string)
+axis([W(1) W(end) (min(phase)-0.15*abs(min(phase))) 0])
 
 end
-
