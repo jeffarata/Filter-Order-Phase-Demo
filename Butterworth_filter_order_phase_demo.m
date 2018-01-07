@@ -14,6 +14,7 @@
 % phase delay = -phase ./ w = -phase ./ (2*pi*f)
 % phase delay in words: negative phase shift divided by angular frequency
 
+close all;
 clear;
 clc;
 
@@ -62,9 +63,9 @@ for ii = 1:IIR_max_order
     subplot(2,1,2)
     axis([0 fs/2 -40 0])
                   
-    % Returns group delay in samples and W in Hs
+    % Returns group delay in samples and W in Hz
     [D, D_W] = group_delay(b, a, N, fs);
-    D = D/fs;   % Group delay in seconds
+    D = D/fs;  % Group delay in seconds
     % Phase response of the filter
     phase = angle(H);
     phase = unwrap(phase); 
@@ -131,8 +132,8 @@ ylabel('Difference of Delay in Seconds')
 % constant values with increasing filter order. After an order of 5-10, 
 % the group delay seems very close to linear for frequencies in the 
 % passband Still, the group delay is not linear overall, as expected for an
-% IIR. Finally, the cutoff frequency approaches the highest value for the difference 
-%in delay with increasing filter order.
+% IIR. Finally, the cutoff frequency approaches the highest value for the 
+% difference in delay with increasing filter order.
 
 
 % 5.1) Plot the phase shift vs filter order of certain frequencies
