@@ -11,7 +11,7 @@
 % group delay in time = K/fs = (N-1)/(2*fs)
 % phase delay = phase shift / (2*pi*f); Phase divided by angular frequency
 
-close all
+close all;
 clear;
 clc;
 
