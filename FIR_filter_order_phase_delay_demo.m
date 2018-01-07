@@ -20,7 +20,7 @@ f = 10;          % pick a frequency for our signal
 
 %% FIR Filters - using fir1
 
-%% Group Delay vs. Filter Order
+%% 1.1) Group Delay vs. Filter Order
 
 % In an FIR filter, the phase shift is usually linear in the form -K*w, 
 % where K is the group delay and w is frequency. Since group delay is the
@@ -44,7 +44,7 @@ title('Group Delay (Samples) of FIR Filter vs. Filter Order')
 ylabel('K, # of samples')
 
 
-%% Time Delay vs. Filter Order
+%% 1.2) Time Delay vs. Filter Order
 
 % Time delay is just the group delay, the average number of samples
 % delayed, multiplied by the time in between samples, 1/fs
@@ -58,7 +58,7 @@ title('Group Delay (Time) vs. Filter Order')
 ylabel('K/fs, sec.')
 
 
-%% Phase Shift vs. Filter Order
+%% 1.3) Phase Shift vs. Filter Order
 
 % Phase shift can be found to be p = -2*pi*K*f/fs
 % Divide out pi for units of pi radians
@@ -73,7 +73,7 @@ title(['Phase Shift in Pi Radians vs. Filter Order for Frequency = ', num2str(f)
 ylabel('p, pi radians')
 
 
-%% Phase Delay vs. Filter Order
+%% 1.4) Phase Delay vs. Filter Order
 
 % Phase delay is the phase shift divided by the negative angular frequency
 %
@@ -120,6 +120,7 @@ for ii = 1:order(end)
     b = fir1(ii, cutoff/(fs/2) );       % Filter coefficients
     y = filter(b,1,x);                  % signal output
     y_time = t + t_delay(ii);           % delayed time vector of output
+    % 2) Plot of input and output signals
     figure(2)
     plot(t,x,'b', t,y,'r')              % plot input and output of filter
     axis([0 1 -1.5 1.5])
@@ -134,6 +135,7 @@ for ii = 1:order(end)
     end                                             % previous even y value
     hold off                                        % for less fluctuation.    
     
+    % 3) Frequency Response
     figure(3)
     [H, W] = freq_response(b, 1, N_data, fs);     % W is true frequency, Hz
     subplot(2,1,1)
