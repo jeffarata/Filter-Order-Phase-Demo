@@ -143,7 +143,7 @@ for ii = 1:order(end)
     subplot(2,1,1)
     title(['Frequency Response FIR Order: ', num2str(ii)])
     
-    % Returns group delay in samples and W in Hs
+    % Returns group delay in samples and W in Hz
     [D, D_W] = group_delay(b, 1, N_data, fs);
     D = D/fs;   % Group delay in seconds
     % For plotting the delay of a few frequencies vs. filter order
