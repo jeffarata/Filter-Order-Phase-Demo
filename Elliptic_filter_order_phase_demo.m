@@ -37,7 +37,7 @@ cutoff = (fs/4);                 % choose filter cutoff frequency <= fs/2
 N = 2048;                        % number of data points wanted
 cutoff_idx = round((cutoff/(fs/2))*N + 1);
 
-idx_check = round(linspace(1,cutoff_idx,10));
+idx_check = round(linspace(1,cutoff_idx,5));
 delay_check_matrix = zeros(IIR_max_order,length(idx_check));
 phase_check_matrix = zeros(IIR_max_order,length(idx_check));
 
