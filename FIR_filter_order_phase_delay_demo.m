@@ -2,7 +2,7 @@
 % 12/18/17
 %
 % This script looks at the effects of filter order on the phase, group
-% delay/time delay of a signal, using an FIR filter.
+% delay/time delay, and phase delay of a signal, using an FIR filter.
 
 
 % Notes on FIR Filters
@@ -15,10 +15,12 @@ close all
 clear;
 clc;
 
+
+%% FIR Filters - using fir1
+
 fs = 10000;      % picking a sampling frequency
 f = 10;          % pick a frequency for our signal
 
-%% FIR Filters - using fir1
 
 %% 1.1) Group Delay vs. Filter Order
 
