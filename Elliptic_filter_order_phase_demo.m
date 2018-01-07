@@ -37,7 +37,7 @@ cutoff = (fs/4);                 % choose filter cutoff frequency <= fs/2
 N = 2048;                        % number of data points wanted
 cutoff_idx = round((cutoff/(fs/2))*N + 1);
 
-idx_check = round(linspace(1,cutoff_idx,5));
+idx_check = round(linspace(1,cutoff_idx,10));
 delay_check_matrix = zeros(IIR_max_order,length(idx_check));
 phase_check_matrix = zeros(IIR_max_order,length(idx_check));
 
@@ -161,8 +161,9 @@ ylabel('Difference of Phase Shift (pi radians)')
 % For frequencies in the passband, the differenc in phase shift with
 % increasing filter order seems to oscillate around 0. For frequcny bin 0,
 % the difference stays constant at 0. The phase shift itself at frequency 0 
-% is 0 with increasing filter order. In the passband, while the phase shift
-% is delayed, it backtracks towards 0 with even filter orders.
+% is 0 with increasing filter order. For small enough frequencies in the
+% passband, while the phase shift is delayed, it backtracks towards 0 with
+% even filter orders.
 
 % Notes on the Cutoff Frequency:
 %
